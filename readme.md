@@ -31,14 +31,59 @@
   - Install from list > pick from floppy > Nvidia Desktop Device
   - Support from GTX16 (tested V100 and GT1030 and it fails), works on RTX3050 and A400.
   - Place in secondary PCIE slot.
-- **Qualcomm NFA765 a.k.a. WCN6856.** [Lenovo](https://support.lenovo.com/us/en/downloads/ds556203-qualcomm-wireless-lan-driver-for-windows-11-arm-version-21h2-or-later-thinkpad-x13s-gen-1-types-21bx-21by)
-  - However I'm stuck in 0xC00000E5 error.
 - **Realtek USB GbE** [treexy](https://treexy.com/products/driver-fusion/database/network-adapters/realtek/usb-c-dock-gen2-ethernet/)
   - Usually common USB LAN adapter e.g. Ugreen are Realtek already
   - May have sleeping problem.
   - Yep, onboard LAN has no driver obviously.
   - Yep, Realtek USB Wifi is not included. Use Wifi extenders that has LAN port instead.
   - ~~LTE / 5G module are too much for a desktop.~~
+- Qualcomm ~~NFA765 a.k.a. WCN6856~~ **NFA765A or NCM865A**. [Q6A forum.](https://forum.radxa.com/t/wi-fi-bt-support-for-windows-on-q6a/31091/5) [Q8B page.](https://docs.radxa.com/en/dragon/q8b/hardware-use/m2-e-key) 
+  - ~~A for ARM I guess.~~
+  - Revision "01" / "0A" / "0B" etc. doesn't count.
+  - [WOA-Project/Qualcomm-Reference-Drivers](https://github.com/WOA-Project/Qualcomm-Reference-Drivers) has `qcwlanhmt8280.cab`, `qcwlanhsp8380.cab` matching `qcwlanhmt8280.inf`, `qcwlanhsp8380.inf` in [treexy](https://treexy.com/products/driver-fusion/database/network-adapters/qualcomm/fastconnect-6900-wi-fi-6e-dual-band-simultaneous-dbs-wificx-network-adapter/). However even the inf file may not in full list. Keep searching for the matching driver.
+  - All common drivers `qcwlan64.inf` and hardwares (the NFA765, even NCM865) are **not compatable**. Only the [QCNCM865AAMD-865A](https://www.aliexpress.com/item/1005009811479844.html) or [NFA765A](https://www.amazon.com/-/zh_TW/QCNFA765-2400Mbps-802-11AX-Qualcomm-NFA765/dp/B0CJ4N5QSL) which are "for Qualcomm CPU only" are compatable. Buying straight from Quectel official store (they have store in Taobao) is a safe choice.
+  - Forcing driver install will only see accessible networks but cannot connect them ~~or instant BSOD~~. Same module works fine in x64 (X99 mobo).
+
+#### Driver / model reference between general and "ARM enabled" WiFi modules ####
+
+*Just showing 1 sample for the SYBSYS issue, good luck on sourcing them.*
+
+The result driver name are usually `WCN685x`, `QCA206x`, `FastConnect 6900` or `FastConnect 7800`.
+
+This is for ARM `NTARM64` in `qcwlanhmt8280.inf` or `qcwlanhsp8380.inf`:
+
+```inf
+;NFA725a v2.1
+%QcWlan.DeviceDesc.6490%     = QcWlan_NFA725a_2_1.ndi,               PCI\VEN_17CB&DEV_1103&SUBSYS_910A14CD
+
+;NFA765a v2.1
+%QcWlan.DeviceDesc.6490%     = QcWlan_NFA765a_2_1.ndi,            	 PCI\VEN_17CB&DEV_1103&SUBSYS_E105105B
+
+;NCM825A
+%QcWlan.DeviceDesc.NCM825A%     = QcWlan_NCM825A.ndi,      			   PCI\VEN_17CB&DEV_1107&SUBSYS_940A14CD
+
+;NCM865A
+%QcWlan.DeviceDesc.NCM865A%     = QcWlan_NCM865A.ndi,      			   PCI\VEN_17CB&DEV_1107&SUBSYS_E0EB105B
+```
+
+This is for x86 `AMD64` in `qcwlan64.inf`:
+
+```inf
+;NFA725 v2.0
+%QcWlan.DeviceDesc.685x%     = QcWlan_NFA725_2_0.ndi,                      PCI\VEN_17CB&DEV_1103&SUBSYS_910814CD 
+
+;NFA765 v2.0
+%QcWlan.DeviceDesc.685x%     = QcWlan_NFA765_2_0.ndi,                      PCI\VEN_17CB&DEV_1103&SUBSYS_E0B6105B 
+
+;NFA725 v2.1
+%QcWlan.DeviceDesc.685x%     = QcWlan_NFA725_2_1.ndi,                      PCI\VEN_17CB&DEV_1103&SUBSYS_910914CD  
+
+;NFA765 v2.1
+%QcWlan.DeviceDesc.685x%     = QcWlan_RA_NFA765_2_1.ndi,                   PCI\VEN_17CB&DEV_1103&SUBSYS_A82D11AD 
+
+;For Quectel
+%QcWlan.DeviceDesc.NCM865%   = QcWlan_NCM865.ndi,                      PCI\VEN_17CB&DEV_1107&SUBSYS_80001EAC
+```
 
 ### Software worth mentioning ###
 

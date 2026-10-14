@@ -50,7 +50,7 @@
 
 - This appears in a Copilot+ PC. Source: [HKEPC](https://www.hkepc.com/23634/%E6%80%A7%E8%83%BD%E5%8B%81__24_%E5%B0%8F%E6%99%82%E9%9B%BB%E6%B1%A0%E7%BA%8C%E8%88%AA_ASUS_Vivobook_S16_S3607Q_Copilot%2B_PC_%E6%89%8B%E6%8F%90%E9%9B%BB%E8%85%A6)
 
-- Finally, by sheer coincidentce, it appears in [goofish](https://www.goofish.com/item?spm=a21ybx.search.searchFeedList.6.524c323ceYMdAL&id=995000470667&categoryId=126862930).
+- Finally, by sheer coincidence, it appears in [goofish](https://www.goofish.com/item?spm=a21ybx.search.searchFeedList.6.524c323ceYMdAL&id=995000470667&categoryId=126862930).
 
 - *None is found in Taobao. Image search result is close to nothing. They may have been discarded due to driver issues (It is "Qualcomm CPU only" which is WoA only, x86 will malfunction).*
 

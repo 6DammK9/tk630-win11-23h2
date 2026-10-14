@@ -44,6 +44,25 @@
   - All common drivers `qcwlan64.inf` and hardwares (the NFA765, even NCM865) are **not compatable**. Only the [QCNCM865AAMD-865A](https://www.aliexpress.com/item/1005009811479844.html) or [NFA765A](https://www.amazon.com/-/zh_TW/QCNFA765-2400Mbps-802-11AX-Qualcomm-NFA765/dp/B0CJ4N5QSL) which are "for Qualcomm CPU only" are compatable. Buying straight from Quectel official store (they have store in Taobao) is a safe choice.
   - Forcing driver install will only see accessible networks but cannot connect them ~~or instant BSOD~~. Same module works fine in x64 (X99 mobo).
 
+#### QCNFA765 or NFA765a as T99H294.70 ####
+
+- This has been mentioned in [the Q8B page.](https://docs.radxa.com/en/dragon/q8b/hardware-use/m2-e-key)
+
+- This appears in a Copilot+ PC. Source: [HKEPC](https://www.hkepc.com/23634/%E6%80%A7%E8%83%BD%E5%8B%81__24_%E5%B0%8F%E6%99%82%E9%9B%BB%E6%B1%A0%E7%BA%8C%E8%88%AA_ASUS_Vivobook_S16_S3607Q_Copilot%2B_PC_%E6%89%8B%E6%8F%90%E9%9B%BB%E8%85%A6)
+
+- Finally, by sheer coincidentce, it appears in [goofish](https://www.goofish.com/item?spm=a21ybx.search.searchFeedList.6.524c323ceYMdAL&id=995000470667&categoryId=126862930).
+
+- *None is found in Taobao. Image search result is close to nothing. They may have been discarded due to driver issues (It is "Qualcomm CPU only" which is WoA only, x86 will malfunction).*
+
+- *I have no idea for any other model names matching the SUBSYS of NFA765A. The only way to know is disassemble known ARM notebooks.*
+
+```ps1
+(gwmi Win32_Bus -Filter 'DeviceID like "PCI%"').GetRelated('Win32_PnPEntity').GetDeviceProperties('DEVPKEY_Device_Address').deviceProperties | ft DeviceID,keyName,{$_.data -shr 16},{$_.data -band 0xFFFF}
+
+# See below
+# PCI\VEN_17CB&DEV_1103&SUBSYS_E130105B&REV_01\4&1DA6BDC0&0&0010
+```
+
 #### Driver / model reference between general and "ARM enabled" WiFi modules ####
 
 *Just showing 1 sample for the SYBSYS issue, good luck on sourcing them.*
@@ -58,6 +77,7 @@ This is for ARM `NTARM64` in `qcwlanhmt8280.inf` or `qcwlanhsp8380.inf`:
 
 ;NFA765a v2.1
 %QcWlan.DeviceDesc.6490%     = QcWlan_NFA765a_2_1.ndi,            	 PCI\VEN_17CB&DEV_1103&SUBSYS_E105105B
+%QcWlan.DeviceDesc.6490%     = QcWlan_NFA765a_2_1.ndi,           	 PCI\VEN_17CB&DEV_1103&SUBSYS_E130105B
 
 ;NCM825A
 %QcWlan.DeviceDesc.NCM825A%     = QcWlan_NCM825A.ndi,      			   PCI\VEN_17CB&DEV_1107&SUBSYS_940A14CD
